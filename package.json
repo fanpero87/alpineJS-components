@@ -1,0 +1,15 @@
+{
+	"devDependencies": {
+		"tailwindcss": "^3.0.23"
+	},
+	"scripts": {
+		"build-css": "npx tailwindcss -i ./src/styles.css -o ./public/styles.css --watch",
+		"build-js": "npx esbuild src/script.js --outfile=public/script.js --bundle --watch"
+	},
+	"dependencies": {
+		"@alpinejs/collapse": "^3.9.0",
+		"@alpinejs/trap": "^3.9.0",
+		"alpinejs": "^3.9.0",
+		"esbuild": "^0.14.14"
+	}
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Tailwind CSS -->
+		<link href="/public/styles.css" rel="stylesheet" />
+
+		<!-- Alpine JS -->
+		<script defer src="/public/script.js"></script>
+
+		<title>Alpine Accordeon</title>
+	</head>
+	<body class="bg-slate-800 font-sans antialiased overflow-y-scroll">
+		<div class="flex items-center justify-center h-screen">
+			<div
+				class="bg-indigo-500 text-white rounded-lg border shadow-lg p-20 w-1/2"
+			>
+				<div
+					x-data="{ active: 1, items: [{ id:1, title: 'Question #1' }, { id:2, title: 'Question #2' }] }"
+					class="space-y-4"
+				>
+					<!-- Accordeon Code -->
+					<template x-for="{id, title} in items" x-bind:key="id">
+						<div
+							x-data="{ 
+                                get expanded() {
+                                    return this.active === this.id
+                                },
+                                set expanded(value) {
+                                    this.active = value ? this.id : null
+                                },
+                            }"
+							role="region"
+							class="border border-black"
+						>
+							<h2>
+								<button
+									x-on:click="expanded = !expanded"
+									x-bind:aria-expanded="expanded"
+									class="flex itmes-center justify-between w-full font-bold text-xl px-6 py-3"
+								>
+									<span x-text="title"></span>
+									<span x-show="expanded" aria-hidden="true" class="ml-4"
+										>&minus;</span
+									>
+									<span x-show="!expanded" aria-hidden="true" class="ml-4"
+										>&plus;</span
+									>
+								</button>
+							</h2>
+
+							<div x-show="expanded" x-collapse class="pb-4 px-6">
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
+								quas fugit? Numquam, rerum ducimus? Ipsum nesciunt perferendis
+								recusandae quaerat vero quibusdam neque natus dolore, aut culpa
+								distinctio, nihil, tempore animi.
+							</div>
+						</div>
+					</template>
+					<script>
+						import collapse from "@alpinejs/collapse";
+						Alpine.plugin(collapse);
+					</script>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

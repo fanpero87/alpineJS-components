@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Tailwind CSS -->
+		<link href="/public/styles.css" rel="stylesheet" />
+
+		<!-- Alpine JS -->
+		<script defer src="/public/script.js"></script>
+
+		<!-- Add Tippy.js CDN -->
+		<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+		<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+
+		<title>Alpine Tootip</title>
+	</head>
+
+	<body class="px-80 py-40 space-x-5">
+		<!-- Option # 1 -->
+		<button
+			id="button"
+			type="button"
+			class="border border-black px-4 py-2 focus:outline-nonefocus:ring-4 focus:ring-aqua-400"
+		>
+			Save1
+		</button>
+
+		<script>
+			tippy(document.getElementById("button"), {
+				content: "Hey you # 1....",
+			});
+		</script>
+
+		<!-- Option # 2 -->
+		<button
+			x-data
+			x-init="tippy($el, {content: 'Hey you # 2....'})"
+			type="button"
+			class="border border-black px-4 py-2 focus:outline-nonefocus:ring-4 focus:ring-aqua-400"
+		>
+			Save2
+		</button>
+
+		<!-- Option # 3 -->
+		<button
+			x-data
+			x-tooltip="Hey you # 3...."
+			type="button"
+			class="border border-black px-4 py-2 focus:outline-nonefocus:ring-4 focus:ring-aqua-400"
+		>
+			Save3
+		</button>
+
+		<!-- Option # 4 -->
+		<button
+			x-data
+			@click="$tooltip('Copied succesfully!')"
+			type="button"
+			class="border border-black px-4 py-2 focus:outline-nonefocus:ring-4 focus:ring-aqua-400"
+		>
+			Save4
+		</button>
+		<script>
+			document.addEventListener("alpine:init", () => {
+				// Magic: $tooltip
+				Alpine.magic("tooltip", (el) => {
+					return (message) => {
+						let instance = tippy(el, {
+							content: message,
+							trigger: "manual",
+						});
+
+						instance.show();
+
+						setTimeout(() => {
+							instance.hide();
+							setTimeout(() => instance.destroy(), 150);
+						}, 2000);
+					};
+				});
+
+				// Directive: x-tooltip
+				Alpine.directive("tooltip", (el, { expression }) => {
+					tippy(el, { content: expression });
+				});
+			});
+		</script>
+	</body>
+</html>

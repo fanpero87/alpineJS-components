@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Tailwind CSS -->
+		<link href="/public/styles.css" rel="stylesheet" />
+
+		<!-- Alpine JS -->
+		<script defer src="/public/script.js"></script>
+
+		<title>Alpine Dropdown</title>
+	</head>
+	<body class="dark:bg-slate-600 px-6 py-8">
+		<div class="w-1/2 py-32 mx-auto">
+			<!-- Dropdown -->
+			<div
+				x-data="{
+                open: false,
+                
+                toggle(){
+                    this.open = this.open ? this.close() : true
+                },
+
+                close(focusAfter) {
+                    this.open = false
+
+                    focusAfter && focusAfter.focus()
+                }
+            }"
+				x-on:keydown.escape.prevent.stop="close($refs.button)"
+				x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+				x-id="['dropdown-button']"
+				class="relative"
+			>
+				<!-- Button -->
+				<button
+					x-ref="button"
+					x-on:click="toggle"
+					:aria-expanded="open"
+					:aria-controls="$id('dropdown-button')"
+					type="button"
+					class="border border-black dark:border-white px-4 py-2 focus:outline-none focus:ring-4 focus:ring-aqua-400 dark:text-white"
+				>
+					<span>Actions</span>
+					<span aria-hidden="true">&darr;</span>
+				</button>
+
+				<!-- Panel-->
+				<div
+					x-ref="panel"
+					x-show="open"
+					x-transition
+					x-on:click.outside="close($refs.button)"
+					:id="$id('dropbodnw-button')"
+					style="display: none"
+					class="absolute left-0 mt-2 bg-white border border-black dark:border-white"
+				>
+					<div>
+						<a
+							href="#"
+							class="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 focus:outline-none focus:ring focus:ring-sky-400 disabled dark:text-slate-400"
+						>
+							Add Task above</a
+						>
+						<a
+							href="#"
+							class="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 focus:outline-none focus:ring focus:ring-sky-400 disabled dark:text-slate-400"
+						>
+							Add Task below</a
+						>
+					</div>
+
+					<div class="border-t border-black">
+						<a
+							href="#"
+							class="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 focus:outline-none focus:ring focus:ring-sky-400 disabled dark:text-slate-400"
+						>
+							Edit Task</a
+						>
+						<a
+							href="#"
+							disabled
+							class="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 focus:outline-none focus:ring focus:ring-sky-400 dark:text-slate-400"
+						>
+							Delete Task</a
+						>
+					</div>
+				</div>
+			</div>
+
+			<div class="pt-10">
+				<button
+					type="button"
+					class="border border-black dark:border-white px-4 py-2 focus:outline-none focus:ring-4 focus:ring-aqua-400 dark:text-white"
+				>
+					One Button
+				</button>
+				<button
+					type="button"
+					class="border border-black dark:border-white px-4 py-2 focus:outline-none focus:ring-4 focus:ring-aqua-400 dark:text-white"
+				>
+					Second Button
+				</button>
+			</div>
+		</div>
+	</body>
+</html>
