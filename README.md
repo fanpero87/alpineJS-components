@@ -15,3 +15,10 @@ Here is the list of Components:
 
 This project uses TailWindCSS and AlpineJS, both were installed via NPM.
 For more information on how to do it, please refer to their documentation.
+
+To keep the CSS and JS files up to date after each change, run the following commands on separete terminal windows:
+
+```
+$ npm run build-css
+$ npm run build-js
+```
