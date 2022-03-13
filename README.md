@@ -12,5 +12,6 @@ Here is the list of Components:
 - Tooltip
 
 **Note:**
+
 This project uses TailWindCSS and AlpineJS, both were installed via NPM.
 For more information on how to do it, please refer to their documentation.
